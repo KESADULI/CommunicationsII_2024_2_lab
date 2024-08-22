@@ -23,7 +23,7 @@ if __name__ == '__main__':
 from PyQt5 import Qt
 from gnuradio import qtgui
 import sip
-from gnuradio import analog
+from gnuradio import blocks
 from gnuradio import gr
 from gnuradio.filter import firdes
 from gnuradio.fft import window
@@ -32,7 +32,7 @@ import signal
 from argparse import ArgumentParser
 from gnuradio.eng_arg import eng_float, intx
 from gnuradio import eng_notation
-import Practica1_epy_block_0 as epy_block_0  # embedded python block
+import Practica1_epy_block_2 as epy_block_2  # embedded python block
 
 
 
@@ -79,17 +79,17 @@ class Practica1(gr.top_block, Qt.QWidget):
         ##################################################
         # Blocks
         ##################################################
-        self.qtgui_number_sink_0_0 = qtgui.number_sink(
+        self.qtgui_number_sink_4 = qtgui.number_sink(
             gr.sizeof_float,
             0,
             qtgui.NUM_GRAPH_HORIZ,
             1,
             None # parent
         )
-        self.qtgui_number_sink_0_0.set_update_time(0.10)
-        self.qtgui_number_sink_0_0.set_title("Media")
+        self.qtgui_number_sink_4.set_update_time(0.10)
+        self.qtgui_number_sink_4.set_title("Desviaciòn estandar")
 
-        labels = ["Media diff", '', '', '', '',
+        labels = ["Desviaciòn estandar", '', '', '', '',
             '', '', '', '', '']
         units = ['', '', '', '', '',
             '', '', '', '', '']
@@ -99,28 +99,164 @@ class Practica1(gr.top_block, Qt.QWidget):
             1, 1, 1, 1, 1]
 
         for i in range(1):
-            self.qtgui_number_sink_0_0.set_min(i, 0)
-            self.qtgui_number_sink_0_0.set_max(i, 8)
-            self.qtgui_number_sink_0_0.set_color(i, colors[i][0], colors[i][1])
+            self.qtgui_number_sink_4.set_min(i, -1)
+            self.qtgui_number_sink_4.set_max(i, 1)
+            self.qtgui_number_sink_4.set_color(i, colors[i][0], colors[i][1])
             if len(labels[i]) == 0:
-                self.qtgui_number_sink_0_0.set_label(i, "Data {0}".format(i))
+                self.qtgui_number_sink_4.set_label(i, "Data {0}".format(i))
             else:
-                self.qtgui_number_sink_0_0.set_label(i, labels[i])
-            self.qtgui_number_sink_0_0.set_unit(i, units[i])
-            self.qtgui_number_sink_0_0.set_factor(i, factor[i])
+                self.qtgui_number_sink_4.set_label(i, labels[i])
+            self.qtgui_number_sink_4.set_unit(i, units[i])
+            self.qtgui_number_sink_4.set_factor(i, factor[i])
 
-        self.qtgui_number_sink_0_0.enable_autoscale(True)
-        self._qtgui_number_sink_0_0_win = sip.wrapinstance(self.qtgui_number_sink_0_0.qwidget(), Qt.QWidget)
-        self.top_layout.addWidget(self._qtgui_number_sink_0_0_win)
-        self.epy_block_0 = epy_block_0.blk()
-        self.analog_sig_source_x_0 = analog.sig_source_f(samp_rate, analog.GR_TRI_WAVE, 10000, 2, 0, 0)
+        self.qtgui_number_sink_4.enable_autoscale(False)
+        self._qtgui_number_sink_4_win = sip.wrapinstance(self.qtgui_number_sink_4.qwidget(), Qt.QWidget)
+        self.top_layout.addWidget(self._qtgui_number_sink_4_win)
+        self.qtgui_number_sink_3 = qtgui.number_sink(
+            gr.sizeof_float,
+            0,
+            qtgui.NUM_GRAPH_HORIZ,
+            1,
+            None # parent
+        )
+        self.qtgui_number_sink_3.set_update_time(0.10)
+        self.qtgui_number_sink_3.set_title("Potencia Promedio")
+
+        labels = ["Potencia Promedio", '', '', '', '',
+            '', '', '', '', '']
+        units = ['', '', '', '', '',
+            '', '', '', '', '']
+        colors = [("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"),
+            ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black")]
+        factor = [1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1]
+
+        for i in range(1):
+            self.qtgui_number_sink_3.set_min(i, -1)
+            self.qtgui_number_sink_3.set_max(i, 1)
+            self.qtgui_number_sink_3.set_color(i, colors[i][0], colors[i][1])
+            if len(labels[i]) == 0:
+                self.qtgui_number_sink_3.set_label(i, "Data {0}".format(i))
+            else:
+                self.qtgui_number_sink_3.set_label(i, labels[i])
+            self.qtgui_number_sink_3.set_unit(i, units[i])
+            self.qtgui_number_sink_3.set_factor(i, factor[i])
+
+        self.qtgui_number_sink_3.enable_autoscale(False)
+        self._qtgui_number_sink_3_win = sip.wrapinstance(self.qtgui_number_sink_3.qwidget(), Qt.QWidget)
+        self.top_layout.addWidget(self._qtgui_number_sink_3_win)
+        self.qtgui_number_sink_2 = qtgui.number_sink(
+            gr.sizeof_float,
+            0,
+            qtgui.NUM_GRAPH_HORIZ,
+            1,
+            None # parent
+        )
+        self.qtgui_number_sink_2.set_update_time(0.10)
+        self.qtgui_number_sink_2.set_title("RMS")
+
+        labels = ["RMS", '', '', '', '',
+            '', '', '', '', '']
+        units = ['', '', '', '', '',
+            '', '', '', '', '']
+        colors = [("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"),
+            ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black")]
+        factor = [1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1]
+
+        for i in range(1):
+            self.qtgui_number_sink_2.set_min(i, -1)
+            self.qtgui_number_sink_2.set_max(i, 1)
+            self.qtgui_number_sink_2.set_color(i, colors[i][0], colors[i][1])
+            if len(labels[i]) == 0:
+                self.qtgui_number_sink_2.set_label(i, "Data {0}".format(i))
+            else:
+                self.qtgui_number_sink_2.set_label(i, labels[i])
+            self.qtgui_number_sink_2.set_unit(i, units[i])
+            self.qtgui_number_sink_2.set_factor(i, factor[i])
+
+        self.qtgui_number_sink_2.enable_autoscale(False)
+        self._qtgui_number_sink_2_win = sip.wrapinstance(self.qtgui_number_sink_2.qwidget(), Qt.QWidget)
+        self.top_layout.addWidget(self._qtgui_number_sink_2_win)
+        self.qtgui_number_sink_0_2 = qtgui.number_sink(
+            gr.sizeof_float,
+            0,
+            qtgui.NUM_GRAPH_HORIZ,
+            1,
+            None # parent
+        )
+        self.qtgui_number_sink_0_2.set_update_time(0.10)
+        self.qtgui_number_sink_0_2.set_title("Media Cuadratica")
+
+        labels = ["Media acum", '', '', '', '',
+            '', '', '', '', '']
+        units = ['', '', '', '', '',
+            '', '', '', '', '']
+        colors = [("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"),
+            ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black")]
+        factor = [1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1]
+
+        for i in range(1):
+            self.qtgui_number_sink_0_2.set_min(i, 0)
+            self.qtgui_number_sink_0_2.set_max(i, 8)
+            self.qtgui_number_sink_0_2.set_color(i, colors[i][0], colors[i][1])
+            if len(labels[i]) == 0:
+                self.qtgui_number_sink_0_2.set_label(i, "Data {0}".format(i))
+            else:
+                self.qtgui_number_sink_0_2.set_label(i, labels[i])
+            self.qtgui_number_sink_0_2.set_unit(i, units[i])
+            self.qtgui_number_sink_0_2.set_factor(i, factor[i])
+
+        self.qtgui_number_sink_0_2.enable_autoscale(True)
+        self._qtgui_number_sink_0_2_win = sip.wrapinstance(self.qtgui_number_sink_0_2.qwidget(), Qt.QWidget)
+        self.top_layout.addWidget(self._qtgui_number_sink_0_2_win)
+        self.qtgui_number_sink_0_1 = qtgui.number_sink(
+            gr.sizeof_float,
+            0,
+            qtgui.NUM_GRAPH_HORIZ,
+            1,
+            None # parent
+        )
+        self.qtgui_number_sink_0_1.set_update_time(0.10)
+        self.qtgui_number_sink_0_1.set_title("Media")
+
+        labels = ["Media acum", '', '', '', '',
+            '', '', '', '', '']
+        units = ['', '', '', '', '',
+            '', '', '', '', '']
+        colors = [("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"),
+            ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black")]
+        factor = [1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1]
+
+        for i in range(1):
+            self.qtgui_number_sink_0_1.set_min(i, 0)
+            self.qtgui_number_sink_0_1.set_max(i, 8)
+            self.qtgui_number_sink_0_1.set_color(i, colors[i][0], colors[i][1])
+            if len(labels[i]) == 0:
+                self.qtgui_number_sink_0_1.set_label(i, "Data {0}".format(i))
+            else:
+                self.qtgui_number_sink_0_1.set_label(i, labels[i])
+            self.qtgui_number_sink_0_1.set_unit(i, units[i])
+            self.qtgui_number_sink_0_1.set_factor(i, factor[i])
+
+        self.qtgui_number_sink_0_1.enable_autoscale(True)
+        self._qtgui_number_sink_0_1_win = sip.wrapinstance(self.qtgui_number_sink_0_1.qwidget(), Qt.QWidget)
+        self.top_layout.addWidget(self._qtgui_number_sink_0_1_win)
+        self.epy_block_2 = epy_block_2.blk()
+        self.blocks_vector_source_x_0 = blocks.vector_source_f((0,1,2,3,4,5), True, 1, [])
 
 
         ##################################################
         # Connections
         ##################################################
-        self.connect((self.analog_sig_source_x_0, 0), (self.epy_block_0, 0))
-        self.connect((self.epy_block_0, 0), (self.qtgui_number_sink_0_0, 0))
+        self.connect((self.blocks_vector_source_x_0, 0), (self.epy_block_2, 0))
+        self.connect((self.epy_block_2, 0), (self.qtgui_number_sink_0_1, 0))
+        self.connect((self.epy_block_2, 1), (self.qtgui_number_sink_0_2, 0))
+        self.connect((self.epy_block_2, 2), (self.qtgui_number_sink_2, 0))
+        self.connect((self.epy_block_2, 3), (self.qtgui_number_sink_3, 0))
+        self.connect((self.epy_block_2, 4), (self.qtgui_number_sink_4, 0))
 
 
     def closeEvent(self, event):
@@ -136,7 +272,6 @@ class Practica1(gr.top_block, Qt.QWidget):
 
     def set_samp_rate(self, samp_rate):
         self.samp_rate = samp_rate
-        self.analog_sig_source_x_0.set_sampling_freq(self.samp_rate)
 
 
 

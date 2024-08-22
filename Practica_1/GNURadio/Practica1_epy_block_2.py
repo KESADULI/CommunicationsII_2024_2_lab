@@ -13,7 +13,7 @@ class blk (gr.sync_block ):
 		self.acum_anterior = 0
 		self.Ntotales = 0
 		self.acum_anterior1 = 0
-		self.cum_anterior2 = 0
+		self.acum_anterior2 = 0
 
 	def work (self , input_items , output_items ):
 		x = input_items[0] # Senial de entrada .
@@ -33,7 +33,7 @@ class blk (gr.sync_block ):
 		# Calculo de la media cuadratica
 		x2=np.multiply(x,x)
 		acumulado1 = self.acum_anterior1 + np.cumsum(x2)
-		self.acum_anterior1 = acumulado[N -1]
+		self.acum_anterior1 = acumulado1[N -1]
 		y1[:] = acumulado1/self.Ntotales
 
 		# Calculo de la RMS
@@ -48,4 +48,4 @@ class blk (gr.sync_block ):
 		self.acum_anterior2 = acumulado2[N -1]
 		y4[:] = np.sqrt( acumulado2 / self.Ntotales )
 	
-		return len (x)
+		return len (y0)

@@ -59,14 +59,14 @@ blocks:
     phase: '0'
     samp_rate: samp_rate
     type: float
-    waveform: analog.GR_TRI_WAVE
+    waveform: analog.GR_SQR_WAVE
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
     coordinate: [48, 236.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: blocks_vector_source_x_0
   id: blocks_vector_source_x
   parameters:
@@ -84,7 +84,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [712, 228.0]
+    coordinate: [72, 404.0]
     rotation: 0
     state: enabled
 - name: epy_block_0
@@ -93,10 +93,10 @@ blocks:
     _source_code: "import numpy as np\nfrom gnuradio import gr\n\nclass blk(gr.sync_block):\n\
       \tdef __init__(self): # only default arguments here\n\t\tgr.sync_block.__init__(\n\
       \t\t\tself,\n\t\t\tname =\"e_Acum\", # will show up in GRC\n\t\t\tin_sig =[\
-      \ np.float32 ],\n\t\t\tout_sig =[ np. float32 ]\n\t\t)\n\t\t\t\n\tdef work(self\
+      \ np.float32 ],\n\t\t\tout_sig =[ np.float32 ]\n\t\t)\n\t\t\t\n\tdef work(self\
       \ , input_items , output_items ):\n\t\tx = input_items[0] # Senial de entrada\
       \ .\n\t\ty0 = output_items[0] # Senial acumulada\n\t\ty0[:] = np.cumsum(x)\n\
-      \t\t#y0[:]= len(x)\n\t\treturn y0\n"
+      \t\t#y0[:]= len(x)\n\t\treturn len(y0)\n"
     affinity: ''
     alias: ''
     comment: ''
@@ -110,7 +110,7 @@ blocks:
     bus_structure: null
     coordinate: [360, 192.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: epy_block_1
   id: epy_block
   parameters:
@@ -135,7 +135,7 @@ blocks:
     bus_structure: null
     coordinate: [368, 336.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: epy_block_2
   id: epy_block
   parameters:
@@ -144,7 +144,7 @@ blocks:
       \t\t\tself,\n\t\t\tname =\" Promedios_de_tiempos \", # will show up in GRC\n\
       \t\t\tin_sig =[ np.float32 ],\n\t\t\tout_sig =[ np.float32 ,np.float32 ,np.float32\
       \ ,np.float32 ,np.float32 ]\n\t\t)\n\t\tself.acum_anterior = 0\n\t\tself.Ntotales\
-      \ = 0\n\t\tself.acum_anterior1 = 0\n\t\tself.cum_anterior2 = 0\n\n\tdef work\
+      \ = 0\n\t\tself.acum_anterior1 = 0\n\t\tself.acum_anterior2 = 0\n\n\tdef work\
       \ (self , input_items , output_items ):\n\t\tx = input_items[0] # Senial de\
       \ entrada .\n\t\ty0 = output_items[0] # Promedio de la senial\n\t\ty1 = output_items[1]\
       \ # Media de la senial\n\t\ty2 = output_items[2] # RMS de la senial\n\t\ty3\
@@ -153,13 +153,13 @@ blocks:
       \ len(x)\n\t\tself.Ntotales = self.Ntotales + N\n\t\tacumulado = self.acum_anterior\
       \ + np.cumsum(x)\n\t\tself.acum_anterior = acumulado[N -1]\t\n\t\ty0[:]= acumulado/self.Ntotales\n\
       \n\t\t# Calculo de la media cuadratica\n\t\tx2=np.multiply(x,x)\n\t\tacumulado1\
-      \ = self.acum_anterior1 + np.cumsum(x2)\n\t\tself.acum_anterior1 = acumulado[N\
+      \ = self.acum_anterior1 + np.cumsum(x2)\n\t\tself.acum_anterior1 = acumulado1[N\
       \ -1]\n\t\ty1[:] = acumulado1/self.Ntotales\n\n\t\t# Calculo de la RMS\n\t\t\
       y2[:] = np.sqrt(y1)\n\t\n\t\t# Calculo de la potencia promedio\n\t\ty3[:] =\
       \ np.multiply(y2 ,y2)\n\t\n\t\t# Calculo de la desviacion estandar\n\t\tx3 =\
       \ np.multiply(x-y0 ,x-y0)\n\t\tacumulado2 = self.acum_anterior2 + np.cumsum(x3)\n\
       \t\tself.acum_anterior2 = acumulado2[N -1]\n\t\ty4[:] = np.sqrt( acumulado2\
-      \ / self.Ntotales )\n\t\n\t\treturn len (x)\n"
+      \ / self.Ntotales )\n\t\n\t\treturn len (y0)\n"
     affinity: ''
     alias: ''
     comment: ''
@@ -237,7 +237,7 @@ blocks:
     bus_structure: null
     coordinate: [536, 156.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: qtgui_number_sink_0_0
   id: qtgui_number_sink
   parameters:
@@ -300,7 +300,7 @@ blocks:
     bus_structure: null
     coordinate: [536, 300.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: qtgui_number_sink_0_1
   id: qtgui_number_sink
   parameters:
@@ -620,6 +620,8 @@ blocks:
 connections:
 - [analog_sig_source_x_0, '0', epy_block_0, '0']
 - [analog_sig_source_x_0, '0', epy_block_1, '0']
+- [blocks_vector_source_x_0, '0', epy_block_0, '0']
+- [blocks_vector_source_x_0, '0', epy_block_1, '0']
 - [blocks_vector_source_x_0, '0', epy_block_2, '0']
 - [epy_block_0, '0', qtgui_number_sink_0, '0']
 - [epy_block_1, '0', qtgui_number_sink_0_0, '0']

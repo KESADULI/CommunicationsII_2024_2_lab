@@ -7,7 +7,7 @@ class blk(gr.sync_block):
 			self,
 			name ="e_Acum", # will show up in GRC
 			in_sig =[ np.float32 ],
-			out_sig =[ np. float32 ]
+			out_sig =[ np.float32 ]
 		)
 			
 	def work(self , input_items , output_items ):
@@ -15,4 +15,4 @@ class blk(gr.sync_block):
 		y0 = output_items[0] # Senial acumulada
 		y0[:] = np.cumsum(x)
 		#y0[:]= len(x)
-		return y0
+		return len(y0)
