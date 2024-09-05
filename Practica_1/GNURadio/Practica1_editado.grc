@@ -33,11 +33,23 @@ options:
     state: enabled
 
 blocks:
+- name: puntos
+  id: variable
+  parameters:
+    comment: ''
+    value: '500'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [304, 24.0]
+    rotation: 0
+    state: enabled
 - name: samp_rate
   id: variable
   parameters:
     comment: ''
-    value: '10000'
+    value: '1000'
   states:
     bus_sink: false
     bus_source: false
@@ -121,7 +133,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [576, 408.0]
+    coordinate: [560, 368.0]
     rotation: 0
     state: true
 - name: blocks_multiply_const_vxx_0
@@ -157,7 +169,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [328, 672.0]
+    coordinate: [336, 560.0]
     rotation: 0
     state: enabled
 - name: blocks_multiply_const_vxx_0_1
@@ -175,7 +187,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [880, 480.0]
+    coordinate: [864, 424.0]
     rotation: 0
     state: enabled
 - name: blocks_vector_source_x_0
@@ -195,7 +207,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [48, 388.0]
+    coordinate: [72, 200.0]
     rotation: 0
     state: enabled
 - name: blocks_vector_source_x_1
@@ -215,7 +227,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [48, 532.0]
+    coordinate: [80, 520.0]
     rotation: 0
     state: enabled
 - name: epy_block_0_0
@@ -239,7 +251,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [704, 424.0]
+    coordinate: [728, 384.0]
     rotation: 0
     state: enabled
 - name: epy_block_1_0
@@ -251,8 +263,8 @@ blocks:
       \t\t\tout_sig=[np.float32]\n\t\t)\n\t\tself.acum_anterior=0\n\t\t\n\tdef work(self\
       \ , input_items , output_items ):\n\t\tx=input_items[0] # Senial de entrada\
       \ .\n\t\ty0=output_items[0] # Senial acumulada diferencial\n\t\t\n\t\tN=len(x)\n\
-      \t\tdiff=np.cumsum(x)-self.acum_anterior\n\t\tself.acum_anterior = diff[N -1]\n\
-      \t\ty0[:]=diff\n\t\treturn len(y0)\n"
+      \t\tself.acum_anterior=x\n\t\tdiff=np.cumsum(x)-self.acum_anterior\n\t\tself.acum_anterior\
+      \ = diff[N -1]\n\t\ty0[:]=diff\n\t\treturn len(y0)\n"
     affinity: ''
     alias: ''
     comment: ''
@@ -264,9 +276,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [872, 360.0]
+    coordinate: [864, 312.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: epy_block_2
   id: epy_block
   parameters:
@@ -303,7 +315,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1048, 352.0]
+    coordinate: [1016, 256.0]
     rotation: 0
     state: enabled
 - name: low_pass_filter_0
@@ -313,7 +325,7 @@ blocks:
     alias: ''
     beta: '6.76'
     comment: ''
-    cutoff_freq: '500'
+    cutoff_freq: '50'
     decim: '1'
     gain: '1'
     interp: '1'
@@ -700,7 +712,7 @@ blocks:
     marker9: '-1'
     name: '"Sin ruido"'
     nconnections: '1'
-    size: '1024'
+    size: puntos
     srate: samp_rate*3
     stemplot: 'False'
     style1: '1'
@@ -739,7 +751,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [520, 292.0]
+    coordinate: [504, 144.0]
     rotation: 0
     state: enabled
 - name: qtgui_time_sink_x_0_0
@@ -797,7 +809,7 @@ blocks:
     marker9: '-1'
     name: '"Con ruido"'
     nconnections: '1'
-    size: '1024'
+    size: puntos
     srate: samp_rate*3
     stemplot: 'False'
     style1: '1'
@@ -836,7 +848,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [688, 564.0]
+    coordinate: [680, 560.0]
     rotation: 0
     state: enabled
 - name: qtgui_time_sink_x_0_0_0
@@ -894,7 +906,7 @@ blocks:
     marker9: '-1'
     name: '"Filtrado"'
     nconnections: '1'
-    size: '1024'
+    size: puntos
     srate: samp_rate*3
     stemplot: 'False'
     style1: '1'
@@ -933,7 +945,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1064, 604.0]
+    coordinate: [1048, 592.0]
     rotation: 0
     state: enabled
 - name: qtgui_time_sink_x_0_0_1
@@ -991,7 +1003,7 @@ blocks:
     marker9: '-1'
     name: '"ruido"'
     nconnections: '1'
-    size: '1024'
+    size: puntos
     srate: samp_rate*3
     stemplot: 'False'
     style1: '1'
@@ -1030,7 +1042,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [552, 716.0]
+    coordinate: [552, 688.0]
     rotation: 0
     state: enabled
 
@@ -1050,7 +1062,6 @@ connections:
 - [blocks_vector_source_x_0, '0', blocks_multiply_const_vxx_0, '0']
 - [blocks_vector_source_x_1, '0', blocks_add_const_vxx_0, '0']
 - [blocks_vector_source_x_1, '0', blocks_multiply_const_vxx_0_0, '0']
-- [epy_block_0_0, '0', blocks_multiply_const_vxx_0_1, '0']
 - [epy_block_0_0, '0', epy_block_1_0, '0']
 - [epy_block_1_0, '0', blocks_multiply_const_vxx_0_1, '0']
 - [epy_block_2, '0', qtgui_number_sink_0_1, '0']
@@ -1063,4 +1074,4 @@ connections:
 
 metadata:
   file_format: 1
-  grc_version: 3.10.9.2
+  grc_version: v3.11.0.0git-810-g1ecb8565
