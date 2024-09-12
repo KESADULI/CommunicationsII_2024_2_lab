@@ -17,6 +17,10 @@ class blk(gr.sync_block):
 		y0=output_items[0] # Senial acumulada diferencial
 		
 		N=len(x)
+<<<<<<< HEAD
+=======
+		self.acum_anterior=x
+>>>>>>> P1_Kevin
 		diff=np.cumsum(x)-self.acum_anterior
 		self.acum_anterior = diff[N -1]
 		y0[:]=diff
